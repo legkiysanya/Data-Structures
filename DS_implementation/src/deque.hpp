@@ -1,3 +1,6 @@
+#ifndef DEQUE_HPP
+#define DEQUE_HPP
+
 #include <iostream>
 
 template<class type> 
@@ -130,4 +133,4 @@ public:
    int size() { return Size; }
 };
 
-
+#endif

@@ -1,6 +1,7 @@
 #include <iostream>
-#include "deque.cpp"
-#include "queue.cpp"
+#include "deque.hpp"
+#include "queue.hpp"
+#include "stack.hpp"
 
 using namespace std;
 
@@ -77,4 +78,33 @@ int main() {
 
    cout << "size of the empty queue: ";
    std::cout << q.size() << "\n";
+
+
+   
+
+   std::cout << "\n";
+   std::cout << "Stack demonstrating\n";
+
+   stack<char> s;
+   s.pop();
+   for (int i=76; i != 83; ++i) 
+      s.push((char) i);
+
+   cout << "the initial stack: ";
+   s.print();
+   std::cout << "a top of the stack: ";
+   std::cout << s.top() << "\n";
+
+   s.pop();
+   s.pop();
+   std::cout << "stack after deleting two elements: ";
+   s.print();
+
+   s.makenull();
+   cout << "stack after deleting all elements: ";
+   s.print();
+   std::cout << "\n";
+   std::cout << "is the stack empty: " << s.empty() << "\n";
+
+
 } 
