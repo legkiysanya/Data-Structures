@@ -1,6 +1,6 @@
 FC=clang++
 FFLAGS=-Wall -std=c++20 -g
-FOPT=-O3  
+FOPT=-Os  
 
 all:
 	$(FC) $(FFLAGS) $(FOPT) -c src/deque.cpp -o obj/deque.o

@@ -36,7 +36,12 @@ public:
       Size = 0;
    }
 
-   node<type> *operator[](int index) { // ДОРАБОТАТЬ защиту выхода за границы
+   node<type> *operator[](int index) { 
+      if (index >= Size || index < 0) {
+         std::cout << "incorrect index value \n";
+         exit(1);
+      } 
+
       node<type> *cur = head;
       int i = 0;
       while (cur && i<Size && i!=index) {
@@ -70,7 +75,7 @@ public:
       Size = 0;
    }
    
-   void erase(type n) { // ДОРАБОТАТЬ
+   void erase(type n) {
      node<type> *tmp;
 
      if (head->data == n) {
@@ -82,10 +87,8 @@ public:
 
         while (cur->next->data != n) {
            cur = cur->next;
-           if (cur->next == nullptr) {
-              std::cout << "there is no element with a value " << n << '\n';
-              return;
-           };
+           if (cur->next == nullptr) 
+              exit(1);
         }
 
         tmp = cur->next->next;
@@ -101,7 +104,6 @@ public:
          return nullptr;
    }
 
-
    void pop() {
       if (head) {
          node<type> *tmp = head;
@@ -114,20 +116,9 @@ public:
       }
    }
 
-  // node<type> pop() {
-  //    node<type>* tmp;
-  //    node<type> h = *head;
-
-  //    tmp = head->next;
-  //    delete head;
-  //    head = tmp;
-
-  //    return h;
-  // }
-   
    void print() {
       if (head) {
-         for (node<type> *cur = head; cur; cur=cur->next) // красота!
+         for (node<type> *cur = head; cur; cur=cur->next) 
             std::cout << cur->data << " ";
          std::cout << std::endl;
       } 

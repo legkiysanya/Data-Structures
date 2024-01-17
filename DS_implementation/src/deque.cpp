@@ -36,6 +36,11 @@ public:
    }
 
    double_ended_node<type> *operator[](int index) {
+      if (index >= Size || index < 0) {
+         std::cout << "incorrect index value \n";
+         exit(1);
+      } 
+
       double_ended_node<type> *cur = head;
       int i = 0;
       while (cur && i<Size && i!=index) {
