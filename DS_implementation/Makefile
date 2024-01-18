@@ -1,6 +1,7 @@
-CPPC=clang++
+#CPPC=clang++
+CPPC=g++
 CPPFLAGS=-Wall -std=c++20 -g
-CPPOPT=-Os  
+CPPOPT=-Os 
 
 all:
 	$(CPPC) $(PPFLAGS) $(CPPOPT) -c src/main.cpp -I obj/ -o obj/main.o

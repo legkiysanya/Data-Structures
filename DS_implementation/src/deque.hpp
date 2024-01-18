@@ -131,6 +131,19 @@ public:
    double_ended_node<type> *front() { return head; }
    double_ended_node<type> *rear()  { return tail; }
    int size() { return Size; }
+   
+   template<class T>
+   friend std::ostream &operator<<(std::ostream &stream, deque<T> obj);
 };
+
+template<class type>
+std::ostream &operator<<(std::ostream &stream, deque<type> obj) {
+   if (obj.head) {
+      for (double_ended_node<type> *cur = obj.head; cur; cur = cur->next) 
+         std::cout << cur->data << " ";
+   }
+   return stream;
+}
+
 
 #endif

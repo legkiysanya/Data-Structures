@@ -55,20 +55,24 @@ public:
       head = tmp;
    }
 
-   void print() {
-      if (head) {
-         for (node<type> *cur = head; cur; cur=cur->next) 
-            std::cout << cur->data << " ";
-         std::cout << std::endl;
-      } 
-   }
-
    void makenull() { 
       while (head) pop(); 
    }
 
    bool empty() { return head == nullptr; }
+   template<class T>
+   friend std::ostream &operator<<(std::ostream &stream, stack<T> obj);
 };
 
+
+
+template<class type>
+std::ostream &operator<<(std::ostream &stream, stack<type> obj) {
+   if (obj.head) {
+      for (node<type> *cur = obj.head; cur; cur = cur->next) 
+         stream << cur->data << " ";
+   }
+   return stream;
+}
 
 #endif

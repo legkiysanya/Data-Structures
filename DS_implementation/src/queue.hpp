@@ -119,16 +119,20 @@ public:
       }
    }
 
-   void print() {
-      if (head) {
-         for (node<type> *cur = head; cur; cur=cur->next) 
-            std::cout << cur->data << " ";
-         std::cout << std::endl;
-      } 
-   }
-
    bool empty() { return head == tail && !head; }
    int size() { return Size; }
+
+   template<class T>
+   friend std::ostream &operator<<(std::ostream &stream, queue<T> obj);
 };
+
+template<class type>
+std::ostream &operator<<(std::ostream &stream, queue<type> obj) {
+   if (obj.head) {
+      for (node<type> *cur = obj.head; cur; cur = cur->next) 
+         stream << cur->data << " ";
+   }
+   return stream;
+}
 
 #endif
