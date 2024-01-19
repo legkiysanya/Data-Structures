@@ -13,14 +13,15 @@ struct double_ended_node {
    }
 };
 
+
 template<class type>
 class deque {
    double_ended_node<type> *head, *tail;
    unsigned int Size;
 public:
    deque() { // constructor
-      head = tail = nullptr;
       Size = 0;
+      head = tail = nullptr;
    }
 
    ~deque() { // deconstructor
@@ -134,16 +135,19 @@ public:
    
    template<class T>
    friend std::ostream &operator<<(std::ostream &stream, deque<T> obj);
+
+   template<class T>
+   friend std::istream &operator>>(std::istream &stream, deque<T> obj);
 };
 
 template<class type>
 std::ostream &operator<<(std::ostream &stream, deque<type> obj) {
    if (obj.head) {
-      for (double_ended_node<type> *cur = obj.head; cur; cur = cur->next) 
-         std::cout << cur->data << " ";
+      for (double_ended_node<type> *cur = obj.head; cur; cur = cur->next) {
+         stream << cur->data << " ";
+      }
    }
    return stream;
 }
-
 
 #endif

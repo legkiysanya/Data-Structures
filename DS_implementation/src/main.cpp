@@ -1,63 +1,84 @@
 #include <iostream>
+#include <fstream>
 #include "deque.hpp"
 #include "queue.hpp"
 #include "stack.hpp"
+#include <vector>
 
 using namespace std;
 
 //template<class type>
 //static void f(deque<type> ob) {
-//   cout << "there is copy of deq  ";
-//   ob.print(); cout << "end\n";
+//   out << "there is copy of deq  ";
+//   ob.print(); out << "end\n";
 //}
 
 int main() {
-   cout.setf(ios::boolalpha);
+   // input and output files
+   std::ifstream in("../data/items.txt");
+   if (!in) 
+      return 1;
 
-   std::cout << "\nDeque demonstrating\n";
+   std::ofstream out("output.txt");
+   if (!out) 
+      return 1;
+
+   queue<int> q;
+   stack<char> s;
    deque<double> d;
-   d.pop_front();
-   for (int i=3; i != 9; ++i) 
-      d.push_back(i * 1.1938);
 
+   while (in) {
+      int i;
+      in >> i;
+      d.push_back(i);
+      q.push(i);
+      s.push(i);
+   }
+   in.close();
+
+
+
+   out << "\nDeque demonstrating\n";
+   out << "the initial deque: ";
+   out << d << "\n";
+   d.pop_front();
    d.push_front(2); 
    d.push_front(1); 
    d.push_front(0); 
-   cout << "the initial deque: ";
-   cout << d << "\n";
 
-   cout << "size of the deque: ";
-   std::cout << d.size() << "\n";
-   cout << d << "\n";
+   out << "size of the deque: ";
+   out << d.size() << "\n";
 
    d.pop_front();
    d.pop_back();
-   cout << "deque after deleting the front and the back elements: ";
-   cout << d << "\n";
+   out << "deque after deleting the front and the back elements: ";
+   out << d << "\n";
 
-   //cout << "copy constructor demonstrating: \n";
+   //out << "copy constructor demonstrating: \n";
    //f(d);
    //d.print();
    
-   cout << "size of the deque: ";
-   std::cout << d.size() << "\n";
+   out << "size of the deque: ";
+   out << d.size() << "\n";
 
    d.make_null();
-   cout << "deque after deleting all elements: ";
-   cout << d << "\n";
+   out << "deque after deleting all elements: ";
+   out << d << "\n";
 
-   cout << "size of the empty deque: ";
-   std::cout << d.size() << "\n";
-
-
+   out << "size of the empty deque: ";
+   out << d.size() << "\n";
 
 
 
 
-   std::cout << "\n";
-   std::cout << "Queue demonstrating\n";
 
-   queue<int> q;
+
+   out << "\n";
+   out << "Queue demonstrating\n";
+
+   out << "the initial queue: ";
+   out << q << "\n";
+
    q.pop();
    for (int i=3; i != 9; ++i) 
       q.push(i);
@@ -65,54 +86,53 @@ int main() {
    q.push(2); 
    q.push(1); 
    q.push(0); 
-   cout << "the initial queue: ";
-   cout << q << "\n";
+   out << q << "\n";
 
-   cout << "size of the queue: ";
-   std::cout << q.size() << "\n";
+   out << "size of the queue: ";
+   out << q.size() << "\n";
 
    q.pop();
    q.pop();
-   cout << "queue after deleting two elements: ";
-   cout << q << "\n";
+   out << "queue after deleting two elements: ";
+   out << q << "\n";
 
-   cout << "size of the queue: ";
-   std::cout << q.size() << "\n";
+   out << "size of the queue: ";
+   out << q.size() << "\n";
 
    q.make_null();
-   cout << "queue after deleting all elements: ";
-   cout << q << "\n";
+   out << "queue after deleting all elements: ";
+   out << q << "\n";
 
-   cout << "size of the empty queue: ";
-   std::cout << q.size() << "\n";
+   out << "size of the empty queue: ";
+   out << q.size() << "\n";
 
 
 
    
 
 
-   std::cout << "\n";
-   std::cout << "Stack demonstrating\n";
+   out << "\n";
+   out << "Stack demonstrating\n";
+   out << "the initial stack: ";
+   out << s << "\n";
 
-   stack<char> s;
    s.pop();
    for (int i=76; i != 83; ++i) 
       s.push((char) i);
 
-   cout << "the initial stack: ";
-   cout << s << "\n";
+   out << s << "\n";
 
-   std::cout << "a top of the stack: ";
-   std::cout << s.top() << "\n";
+   out << "a top of the stack: ";
+   out << s.top() << "\n";
 
    s.pop();
    s.pop();
-   std::cout << "stack after deleting two elements: ";
-   cout << s << "\n";
+   out << "stack after deleting two elements: ";
+   out << s << "\n";
 
    s.makenull();
-   cout << "stack after deleting all elements: ";
-   cout << s << "\n";
+   out << "stack after deleting all elements: ";
+   out << s << "\n";
 
-   std::cout << "is the stack empty: " << s.empty() << "\n";
+   out << boolalpha << "is the stack empty: " << s.empty() << "\n";
 } 

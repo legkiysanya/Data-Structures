@@ -1,7 +1,6 @@
-#CPPC=clang++
-CPPC=g++
+CPPC=clang++
 CPPFLAGS=-Wall -std=c++20 -g
-CPPOPT=-Os 
+CPPOPT=-O2 
 
 all:
 	$(CPPC) $(PPFLAGS) $(CPPOPT) -c src/main.cpp -I obj/ -o obj/main.o
@@ -13,3 +12,4 @@ clean:
 
 run:
 	cd ./bin; ./app;
+	cat bin/output.txt
