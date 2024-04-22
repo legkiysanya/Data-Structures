@@ -1,5 +1,6 @@
 CPPC=clang++
-CPPFLAGS=-Wall -std=c++20 -g -fsanitize=address 
+CPPFLAGS=-Wall -g 
+#CPPFLAGS=-Wall -std=c++20 -g -fsanitize=address 
 #CPPOPT=-O2 
 
 all:

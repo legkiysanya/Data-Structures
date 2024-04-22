@@ -9,6 +9,13 @@ public:
 
   ~Tree();
 
+  Tree(const Tree &obj);
+
+  Tree(Tree &&obj);
+
+  treeNode<type> *copyNode(treeNode<type> *masterNode,
+                           treeNode<type> *slaveNode);
+
   void add(type value);
 
   treeNode<type> *add(type value, treeNode<type> *current);
@@ -34,5 +41,6 @@ public:
 
   void display(std::ofstream &stream);
 
-  void display(const std::string& prefix, std::ofstream &stream, const treeNode<type>* current, bool isLeft);
+  void display(const std::string &prefix, std::ofstream &stream,
+               const treeNode<type> *current, bool isLeft);
 };

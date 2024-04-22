@@ -11,10 +11,28 @@ template <class type> void deleteNode(treeNode<type> *node) { delete node; }
 
 template <class type> Tree<type>::Tree() { root = nullptr; }
 
-template <class type> Tree<type>::~Tree() {
-  // if (root != nullptr)
-  makeNull(root);
+template <class type> Tree<type>::Tree(const Tree &obj) {
+  root = copyNode(obj.root, root);
 }
+
+template <class type> Tree<type>::Tree(Tree &&obj) {
+  root = obj.root;
+  obj.root = nullptr;
+}
+
+template <class type>
+treeNode<type> *Tree<type>::copyNode(treeNode<type> *masterNode,
+                                     treeNode<type> *slaveNode) {
+  if (masterNode == nullptr)
+    return nullptr;
+  slaveNode = new treeNode<type>(masterNode->data);
+  slaveNode->left = copyNode(masterNode->left, slaveNode->left);
+  slaveNode->right = copyNode(masterNode->right, slaveNode->right);
+  return slaveNode;
+}
+
+template <class type> Tree<type>::~Tree() { makeNull(root); }
+
 template <class type> void Tree<type>::add(type value) {
   root = add(value, root);
 }
@@ -46,6 +64,7 @@ template <class type> void Tree<type>::printPostorder() {
   postorderTraversal(printNode, root);
 }
 
+// base inorder traversal function with two arguments
 template <class type>
 void Tree<type>::inorderTraversal(void (*func)(treeNode<type> *),
                                   treeNode<type> *current) {
@@ -56,6 +75,7 @@ void Tree<type>::inorderTraversal(void (*func)(treeNode<type> *),
   inorderTraversal(func, current->right);
 }
 
+// base postorder traversal function with two arguments
 template <class type>
 void Tree<type>::postorderTraversal(void (*func)(treeNode<type> *),
                                     treeNode<type> *current) {
@@ -137,6 +157,20 @@ template Tree<int>::Tree();
 template Tree<double>::Tree();
 template Tree<char>::Tree();
 
+template Tree<int>::Tree(const Tree &obj);
+template Tree<double>::Tree(const Tree &obj);
+template Tree<char>::Tree(const Tree &obj);
+
+template Tree<int>::Tree(Tree &&obj);
+template Tree<double>::Tree(Tree &&obj);
+template Tree<char>::Tree(Tree &&obj);
+
+template treeNode<int> *Tree<int>::copyNode(treeNode<int> *masterNode,
+                                             treeNode<int> *slaveNode);
+template treeNode<double> *Tree<double>::copyNode(treeNode<double> *masterNode,
+                                             treeNode<double> *slaveNode);
+template treeNode<char> *Tree<char>::copyNode(treeNode<char> *masterNode,
+                                             treeNode<char> *slaveNode);
 template Tree<int>::~Tree();
 template Tree<double>::~Tree();
 template Tree<char>::~Tree();

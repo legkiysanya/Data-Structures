@@ -31,7 +31,7 @@ int main() {
   Tree<int> t;
 
   while (in) {
-    int i;
+    int i = 0;
     in >> i;
     d.push_back(i);
     std::cout << i << ' ';
@@ -42,8 +42,16 @@ int main() {
   }
   in.close();
 
+//  t.add(58);
+//  t.add(103);
+//  t.add(202);
+//  t.add(78);
+  Tree<int> tCopy = t;
+  Tree<int> tNew = std::move(t);
+
+  tNew.display(out);
+  tCopy.display(out);
   t.display(out);
-  t.printInorder();
 
   out << "\nDeque demonstrating\n";
   out << "the initial deque: ";
