@@ -11,11 +11,17 @@ template <class type> class SortedList {
   unsigned int Size;
 
 public:
-  SortedList();
+  SortedList(); // consturctor
 
-  ~SortedList();
+  ~SortedList(); // deconstructor
 
   SortedList(const SortedList &obj); // copy constructor
+
+  SortedList(SortedList &&obj); // move constructor
+
+  SortedList<type> &operator=(const SortedList &obj); // assignment operator
+
+  SortedList<type> &operator=(SortedList &&obj); // move assignment operator
 
   void push(type n);
 
@@ -25,11 +31,11 @@ public:
 
   snode<type> *sorted_front() const;
 
-  void make_null();
+  void makeNull();
 
   void print(std::ofstream &stream) const;
 
-  void print_sorted(std::ofstream &stream) const;
+  void printSorted(std::ofstream &stream) const;
 
   bool empty() const;
 

@@ -4,36 +4,42 @@
 #include "nodes.h"
 #include <ostream>
 
-template <class type>
-class Queue {
-   node<type> *head;
-   node<type> *tail;
-   unsigned int Size;
+template <class type> class Queue {
+  node<type> *head;
+  node<type> *tail;
+  unsigned int Size;
+
 public:
-   Queue();
+  Queue(); // constructor
 
-   ~Queue();
+  ~Queue(); // deconstructor
 
-   Queue(const Queue &obj);
+  Queue(const Queue &obj); // copy constructor
 
-   node<type> *operator[](int index);
+  Queue(Queue &&obj); // move constructor
 
-   void push(type n);
+  Queue<type> &operator=(const Queue &obj); // assignment operator
 
-   void make_null();
-   
-   void erase(type n);
+  Queue<type> &operator=(Queue &&obj); // move assignment operator
 
-   node<type> *front() const;
+  node<type> *operator[](int index) const;
 
-   void pop();
+  void push(type n);
 
-   bool empty() const;
+  void makeNull();
 
-   int size() const;
+  void erase(type n);
 
-   template<class T>
-   friend std::ostream &operator<<(std::ostream &stream, const Queue<T>& obj);
+  node<type> *front() const;
+
+  void pop();
+
+  bool empty() const;
+
+  int size() const;
+
+  template <class T>
+  friend std::ostream &operator<<(std::ostream &stream, const Queue<T> &obj);
 };
 
 #endif

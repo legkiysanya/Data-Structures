@@ -3,37 +3,65 @@
 #include <fstream>
 #include <iostream>
 
-template <class type> void printNode(treeNode<type> *node) {
+template <class type>
+void printNode(treeNode<type> *node) {
   std::cout << node->data << "\n";
 }
 
-template <class type> void deleteNode(treeNode<type> *node) { delete node; }
+template <class type>
+void deleteNode(treeNode<type> *node) { delete node; }
 
-template <class type> Tree<type>::Tree() { root = nullptr; }
+// constructor
+template <class type>
+Tree<type>::Tree() { root = nullptr; }
 
-template <class type> Tree<type>::Tree(const Tree &obj) {
-  root = copyNode(obj.root, root);
+// deconstructor
+template <class type>
+Tree<type>::~Tree() { makeNull(root); }
+
+// copy constructor
+template <class type>
+Tree<type>::Tree(const Tree &obj) {
+  root = copyTree(obj.root, root);
 }
 
-template <class type> Tree<type>::Tree(Tree &&obj) {
+// move constructor
+template <class type>
+Tree<type>::Tree(Tree &&obj) {
   root = obj.root;
   obj.root = nullptr;
 }
 
+// assignment operator
 template <class type>
-treeNode<type> *Tree<type>::copyNode(treeNode<type> *masterNode,
+Tree<type> & Tree<type>::operator=(const Tree<type> &obj)  {
+  makeNull();
+  root = copyTree(obj.root, root);
+  return *this;
+}
+
+// move assignment operator
+template <class type>
+Tree<type> & Tree<type>::operator=(Tree<type> &&obj) {
+  makeNull();
+  root = obj.root;
+  obj.root = nullptr;
+  return *this;
+}
+
+template <class type>
+treeNode<type> *Tree<type>::copyTree(treeNode<type> *masterNode,
                                      treeNode<type> *slaveNode) {
   if (masterNode == nullptr)
     return nullptr;
   slaveNode = new treeNode<type>(masterNode->data);
-  slaveNode->left = copyNode(masterNode->left, slaveNode->left);
-  slaveNode->right = copyNode(masterNode->right, slaveNode->right);
+  slaveNode->left = copyTree(masterNode->left, slaveNode->left);
+  slaveNode->right = copyTree(masterNode->right, slaveNode->right);
   return slaveNode;
 }
 
-template <class type> Tree<type>::~Tree() { makeNull(root); }
-
-template <class type> void Tree<type>::add(type value) {
+template <class type>
+void Tree<type>::add(type value) {
   root = add(value, root);
 }
 
@@ -49,22 +77,26 @@ treeNode<type> *Tree<type>::add(type value, treeNode<type> *current) {
   return current;
 }
 
-template <class type> void Tree<type>::makeNull() { makeNull(root); }
+template <class type>
+void Tree<type>::makeNull() { makeNull(root); }
 
-template <class type> void Tree<type>::makeNull(treeNode<type> *current) {
+template <class type>
+void Tree<type>::makeNull(treeNode<type> *current) {
   postorderTraversal(deleteNode, root);
   root = nullptr;
 }
 
-template <class type> void Tree<type>::printInorder() {
+template <class type>
+void Tree<type>::printInorder() {
   inorderTraversal(printNode, root);
 }
 
-template <class type> void Tree<type>::printPostorder() {
+template <class type>
+void Tree<type>::printPostorder() {
   postorderTraversal(printNode, root);
 }
 
-// base inorder traversal function with two arguments
+// base inorder traversal function with only argument
 template <class type>
 void Tree<type>::inorderTraversal(void (*func)(treeNode<type> *),
                                   treeNode<type> *current) {
@@ -75,7 +107,7 @@ void Tree<type>::inorderTraversal(void (*func)(treeNode<type> *),
   inorderTraversal(func, current->right);
 }
 
-// base postorder traversal function with two arguments
+// base postorder traversal function with only argument
 template <class type>
 void Tree<type>::postorderTraversal(void (*func)(treeNode<type> *),
                                     treeNode<type> *current) {
@@ -86,7 +118,8 @@ void Tree<type>::postorderTraversal(void (*func)(treeNode<type> *),
   func(current);
 }
 
-template <class type> void Tree<type>::erase(type value) {
+template <class type>
+void Tree<type>::erase(type value) {
   root = erase(value, root);
 }
 
@@ -121,7 +154,8 @@ treeNode<type> *Tree<type>::putToLeft(treeNode<type> *left,
   return current;
 }
 
-template <class type> void Tree<type>::display(std::ofstream &stream) {
+template <class type>
+void Tree<type>::display(std::ofstream &stream) {
   display("", stream, root, false);
 }
 
@@ -137,6 +171,7 @@ void Tree<type>::display(const std::string &prefix, std::ofstream &stream,
   display(prefix + (isLeft ? "│   " : "    "), stream, current->left, true);
   display(prefix + (isLeft ? "│   " : "    "), stream, current->right, false);
 }
+
 
 template void Tree<int>::display(std::ofstream &stream);
 template void Tree<double>::display(std::ofstream &stream);
@@ -165,11 +200,11 @@ template Tree<int>::Tree(Tree &&obj);
 template Tree<double>::Tree(Tree &&obj);
 template Tree<char>::Tree(Tree &&obj);
 
-template treeNode<int> *Tree<int>::copyNode(treeNode<int> *masterNode,
+template treeNode<int> *Tree<int>::copyTree(treeNode<int> *masterNode,
                                              treeNode<int> *slaveNode);
-template treeNode<double> *Tree<double>::copyNode(treeNode<double> *masterNode,
+template treeNode<double> *Tree<double>::copyTree(treeNode<double> *masterNode,
                                              treeNode<double> *slaveNode);
-template treeNode<char> *Tree<char>::copyNode(treeNode<char> *masterNode,
+template treeNode<char> *Tree<char>::copyTree(treeNode<char> *masterNode,
                                              treeNode<char> *slaveNode);
 template Tree<int>::~Tree();
 template Tree<double>::~Tree();
@@ -229,3 +264,13 @@ template treeNode<double> *Tree<double>::putToLeft(treeNode<double> *left,
                                                    treeNode<double> *current);
 template treeNode<char> *Tree<char>::putToLeft(treeNode<char> *left,
                                                treeNode<char> *current);
+
+template Tree<int>& Tree<int>::operator=(const Tree<int> &obj);
+template Tree<double>& Tree<double>::operator=(const Tree<double> &obj);
+template Tree<char>& Tree<char>::operator=(const Tree<char> &obj);
+
+template Tree<int>& Tree<int>::operator=(Tree<int> &&obj);
+template Tree<double>& Tree<double>::operator=(Tree<double> &&obj);
+template Tree<char>& Tree<char>::operator=(Tree<char> &&obj);
+
+

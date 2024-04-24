@@ -5,15 +5,19 @@ template <class type> class Tree {
   treeNode<type> *root;
 
 public:
-  Tree();
+  Tree(); // constructor
 
-  ~Tree();
+  ~Tree(); // deconstructor
 
-  Tree(const Tree &obj);
+  Tree(const Tree &obj); // copy constructor
 
-  Tree(Tree &&obj);
+  Tree(Tree &&obj); // move constructor
 
-  treeNode<type> *copyNode(treeNode<type> *masterNode,
+  Tree<type>& operator=(const Tree<type> &obj); // move assignment operator
+
+  Tree<type>& operator=(Tree<type> &&obj); // assignment operator
+
+  treeNode<type> *copyTree(treeNode<type> *masterNode,
                            treeNode<type> *slaveNode);
 
   void add(type value);

@@ -16,13 +16,19 @@ public:
 
   Stack(const Stack &obj); // copy constructor
 
+  Stack(Stack &&obj); // move constructor
+
+  Stack<type> &operator=(const Stack &obj); // assignment operator 
+
+  Stack<type> &operator=(Stack &&obj); // move assignment operator
+
   type &top() const;
 
   type pop();
 
   void push(type n);
 
-  void makenull();
+  void makeNull();
 
   bool empty() const;
 

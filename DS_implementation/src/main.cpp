@@ -1,21 +1,14 @@
+#include "header_files/bst.h"
 #include "header_files/deque.h"
 #include "header_files/queue.h"
 #include "header_files/sorted_list.h"
 #include "header_files/stack.h"
-#include "header_files/bst.h"
 
 #include <fstream>
+#include <utility>
 
-// for copy constructor demonstration
-// template<class type>
-// static void f(deque<type> ob) {
-//   out << "there is copy of deq  ";
-//   ob.print(); out << "end\n";
-//}
 int main() {
-
-  //   cout << __TIME__ << "\n";
-  //   // input and output files
+  // input and output files
   std::ifstream in("../data/items.txt");
   if (!in)
     return 1;
@@ -24,123 +17,191 @@ int main() {
   if (!out)
     return 1;
 
+  Tree<int> t;
+  Deque<double> d;
   Queue<int> q;
   Stack<char> s;
-  Deque<double> d;
   SortedList<int> sl;
-  Tree<int> t;
 
+  int i = 0;
+  in >> i;
   while (in) {
-    int i = 0;
-    in >> i;
     d.push_back(i);
-    std::cout << i << ' ';
     q.push(i);
     s.push(i);
     sl.push(i);
     t.add(i);
+    in >> i;
   }
   in.close();
 
-//  t.add(58);
-//  t.add(103);
-//  t.add(202);
-//  t.add(78);
-  Tree<int> tCopy = t;
-  Tree<int> tNew = std::move(t);
-
-  tNew.display(out);
-  tCopy.display(out);
+  Tree<int> tCopied = t;
+  out << "Binary search tree demonstration: \n";
+  out << "The initial bst: \n";
   t.display(out);
 
-  out << "\nDeque demonstrating\n";
-  out << "the initial deque: ";
+  out << "Tree after deleting root node: \n";
+  t.erase(58);
+  t.display(out);
+  
+  out << "Tree after deleting middle node: \n";
+  t.erase(78);
+  t.display(out);
+
+  out << "Copied tree (copy constructor) after inserting several nodes: \n";
+  tCopied.add(34);
+  tCopied.add(0);
+  tCopied.add(50);
+  tCopied.display(out);
+
+  out << "\"Moved\" tree (move assignment operator) \n";
+  Tree<int> tMoved;
+  tMoved = std::move(tCopied);
+  tMoved.display(out); 
+  tMoved.makeNull();
+  tMoved.display(out); 
+  tCopied.display(out); 
+
+
+
+
+  out << "\nDeque demonstration\n";
+  out << "The initial deque: \n";
   out << d << "\n";
-  out << "size of the deque: ";
+
+  out << "Size of the deque: \n";
   out << d.size() << "\n";
-  d.pop_front();
+
+  out << "Deque after inserting several elements: \n";
   d.push_front(2);
   d.push_front(1);
   d.push_front(0);
-  out << "deque after inserting several elements: ";
   out << d << "\n";
-  out << "size of the deque: ";
-  out << d.size() << "\n";
+
+  out << "Deque after deleting the front and the back elements: \n";
   d.pop_front();
   d.pop_back();
-  out << "deque after deleting the front and the back elements: ";
   out << d << "\n";
-  // out << "copy constructor demonstrating: \n";
-  // f(d);
-  // d.print();
-  out << "size of the deque: ";
-  out << d.size() << "\n";
-  d.make_null();
-  out << "deque after deleting all elements: ";
-  out << d << "\n";
-  out << "size of the empty deque: ";
-  out << d.size() << "\n";
+
+  out << "Copied deque (assignment operator): \n";
+  Deque<double> dCopied;
+  dCopied = d;
+  out << dCopied << "\n";
+
+  out << "\"Moved\" deque (move consturctor): \n";
+  Deque<double> dMoved = std::move(d);
+  out << dMoved << "\n";
+
+  d.makeNull();
+
+
+
 
   out << "\n";
-  out << "Queue demonstrating\n";
-  out << "the initial queue: ";
+  out << "Queue demonstration\n";
+  out << "The initial queue: \n";
   out << q << "\n";
-  q.pop();
+
+  out << "Queue after pushing some elements (copy constructor): \n";
   for (int i = 3; i != 9; ++i)
     q.push(i);
+  out << q << "\n";
 
-  out << q << "\n";
-  out << "size of the queue: ";
-  out << q.size() << "\n";
-  q.pop();
-  q.pop();
-  out << "queue after deleting two elements: ";
-  out << q << "\n";
-  out << "size of the queue: ";
-  out << q.size() << "\n";
-  q.make_null();
-  out << "queue after deleting all elements: ";
-  out << q << "\n";
-  out << "size of the empty queue: ";
-  out << q.size() << "\n";
+  out << "Copied queue (copy constructor): \n";
+  Queue<int> qCopied = q;
+  out << qCopied << "\n";
 
-  out << "\nStack demonstrating\n";
-  out << "the initial stack: ";
+  out << "\"Moved\" queue (move assignment operator): \n";
+  Queue<int> qMoved;
+  qMoved = std::move(q);
+  out << qMoved << "\n";
+
+  out << "Moved queue after deleting two elements: \n";
+  qMoved.pop();
+  qMoved.pop();
+  out << qMoved << "\n";
+
+  out << "Copied queue after deleting all elements: \n";
+  qCopied.makeNull();
+  out << qCopied << "\n";
+
+  out << "Size of the empty copied queue: \n";
+  out << qCopied.size() << "\n";
+
+
+
+
+  out << "\nStack demonstration\n";
+  out << "The initial stack: \n";
   out << s << "\n";
-  s.pop();
+
+  out << "Stack after pushing some items: \n";
   for (int i = 76; i != 83; ++i)
     s.push((char)i);
-
   out << s << "\n";
-  out << "a top of the stack: ";
+
+  out << "Copied stack (assignment opretator): \n";
+  Stack<char> sCopied;
+  sCopied = s;
+  out << sCopied << "\n";
+
+  out << "\"Moved\" stack (move constructor): \n";
+  Stack<char> s2 = std::move(sCopied);
+  out << s2 << "\n";
+
+  out << "A top of the stack: \n";
   out << s.top() << "\n";
-  s.pop();
-  out << "stack after deleting two elements: ";
-  out << s << "\n";
-  s.makenull();
-  out << "stack after deleting all elements: ";
-  out << s << "\n";
-  out << std::boolalpha << "is the stack empty: " << s.empty() << "\n";
 
-  out << "\nSorted list demonstrating: \n";
-  out << "a regular list: ";
+  out << "Stack after deleting two elements: \n";
+  s.pop();
+  s.pop();
+  out << s << "\n";
+
+  out << "Stack after deleting all elements: \n";
+  s.makeNull();
+  out << s << "\n";
+
+  out << std::boolalpha << "Is a stack empty: " << s.empty() << "\n";
+
+
+
+
+  out << "\nSorted list demonstration: \n";
+  out << "The innitial regular list: \n";
   sl.print(out);
-  out << "\n";
-  out << "a sorted list: ";
-  sl.print_sorted(out);
-  out << "\n"
-      << "size of a sorted list: ";
+  out << "The innitial sorted list: \n";
+  sl.printSorted(out);
+
+  out << "Copied sorted list (copy constructor): \n";
+  SortedList<int> slCopied = sl;
+  out << "A regular list: \n";
+  slCopied.print(out);
+  out << "A sorted list: \n";
+  slCopied.printSorted(out);
+
+  out << "\"Moved\" sorted list (move assignment operator): \n";
+  SortedList<int> slMoved;
+  slMoved = std::move(slCopied);
+  out << "A regular list: \n";
+  slMoved.print(out);
+  out << "A sorted list: \n";
+  slMoved.printSorted(out);
+
+  out << "Size of a sorted list: \n";
   out << sl.size() << "\n";
-  out << "a sorted list after deleting some elements: \n";
+
+  out << "A sorted list after deleting some elements: \n";
   sl.erase(58);
   sl.erase(103);
   sl.erase(99);
-  out << "a regular list: ";
+  out << "A regular list: \n";
   sl.print(out);
-  out << "\n";
-  out << "a sorted list: ";
-  sl.print_sorted(out);
-  sl.make_null();
+  out << "A sorted list: \n";
+  sl.printSorted(out);
 
+  out << std::boolalpha << "Is a sorted list empty: " << sl.empty() << "\n";
+  sl.makeNull();
+  out << std::boolalpha << "Is a sorted list empty after makeNull procedure: " << sl.empty() << "\n";
+  
   out.close();
 }

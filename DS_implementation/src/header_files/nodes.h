@@ -12,17 +12,17 @@ struct node {
 };
 
 template <class type>
-struct double_ended_node {
+struct denode { // denode -- double ended node
   type data;
-  double_ended_node *prev, *next;
-  double_ended_node(type _data = 0) {
+  denode *prev, *next;
+  denode(type _data = 0) {
     data = _data;
     prev = next = nullptr;
   }
 };
 
 template <class type>
-struct snode {
+struct snode { // snode -- sorted node
   type data;
   snode *next;
   snode *sorted_next;

@@ -4,22 +4,24 @@
 #include "nodes.h"
 #include <ostream>
 
-// template <class T> class Deque;
-// template <class T>
-// std::ostream &operator<<(std::ostream &stream, const Deque<T> &obj);
-
 template <class type> class Deque {
-  double_ended_node<type> *head, *tail;
+  denode<type> *head, *tail;
   unsigned int Size;
 
 public:
-  Deque();
+  Deque(); // constructor
 
-  ~Deque();
+  ~Deque(); // destructor
 
-  Deque(const Deque &obj);
+  Deque(const Deque &obj); // copy constructor
 
-  double_ended_node<type> *operator[](int index) const;
+  Deque(Deque &&obj); // move constructor
+
+  Deque<type> & operator=(const Deque &obj); // assignment operator 
+
+  Deque<type> & operator=(Deque &&obj); // move assignment operator
+
+  denode<type> *operator[](int index) const;
 
   void push_back(type n);
 
@@ -29,17 +31,16 @@ public:
 
   void pop_back();
 
-  void make_null();
+  void makeNull();
 
   void print() const;
 
-  double_ended_node<type> *front() const;
+  denode<type> *front() const;
 
-  double_ended_node<type> *rear() const;
+  denode<type> *rear() const;
 
   int size() const;
 
-  // friend std::ostream &operator<< (std::ostream &stream, Deque<type> &obj);
   template <class T>
   friend std::ostream &operator<<(std::ostream &stream, const Deque<T> &obj);
 };
