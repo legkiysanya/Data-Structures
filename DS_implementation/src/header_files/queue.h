@@ -5,9 +5,9 @@
 #include <ostream>
 
 template <class type> class Queue {
+  unsigned int Size;
   node<type> *head;
   node<type> *tail;
-  unsigned int Size;
 
 public:
   Queue(); // constructor

@@ -3,19 +3,18 @@
 
 // constructor
 template <class type>
-Deque<type>::Deque() : Size(0), head(nullptr), tail(nullptr) {}
+Deque<type>::Deque() : head(nullptr), tail(nullptr), Size(0) {}
 
 // deconstructor
-template <class type>
-Deque<type>::~Deque() { makeNull(); }
+template <class type> Deque<type>::~Deque() { makeNull(); }
 
 // copy constructor
 template <class type>
-Deque<type>::Deque(const Deque &obj) : head(nullptr), tail(nullptr) {
+Deque<type>::Deque(const Deque &obj)
+    : head(nullptr), tail(nullptr), Size(obj.Size) {
   denode<type> *cur = obj.head;
   for (; cur; cur = cur->next)
     push_back(cur->data);
-  Size = obj.Size;
 }
 
 // move constructor
@@ -28,8 +27,7 @@ Deque<type>::Deque(Deque &&obj)
 }
 
 // assignment operator
-template <class type>
-Deque<type> &Deque<type>::operator=(const Deque &obj) {
+template <class type> Deque<type> &Deque<type>::operator=(const Deque &obj) {
   makeNull();
   denode<type> *cur = obj.head;
   for (; cur; cur = cur->next)
@@ -40,8 +38,7 @@ Deque<type> &Deque<type>::operator=(const Deque &obj) {
 }
 
 // move assignment operator
-template <class type>
-Deque<type> &Deque<type>::operator=(Deque &&obj) {
+template <class type> Deque<type> &Deque<type>::operator=(Deque &&obj) {
   makeNull();
   head = obj.head;
   tail = obj.tail;
@@ -52,8 +49,7 @@ Deque<type> &Deque<type>::operator=(Deque &&obj) {
   return *this;
 }
 
-template <class type>
-denode<type> *Deque<type>::operator[](int index) const {
+template <class type> denode<type> *Deque<type>::operator[](int index) const {
   if (index >= Size || index < 0) {
     std::cout << "incorrect index value \n";
     exit(1);
@@ -68,8 +64,7 @@ denode<type> *Deque<type>::operator[](int index) const {
   return cur;
 }
 
-template <class type>
-void Deque<type>::push_back(type n) {
+template <class type> void Deque<type>::push_back(type n) {
   denode<type> *cur;
   cur = new denode<type>(n);
 
@@ -83,8 +78,7 @@ void Deque<type>::push_back(type n) {
   Size++;
 }
 
-template <class type>
-void Deque<type>::push_front(type n) {
+template <class type> void Deque<type>::push_front(type n) {
   denode<type> *cur;
   cur = new denode<type>(n);
 
@@ -98,8 +92,7 @@ void Deque<type>::push_front(type n) {
   Size++;
 }
 
-template <class type>
-void Deque<type>::pop_front() {
+template <class type> void Deque<type>::pop_front() {
   if (head) {
     denode<type> *tmp = head;
     head = head->next;
@@ -113,8 +106,7 @@ void Deque<type>::pop_front() {
   }
 }
 
-template <class type>
-void Deque<type>::pop_back() {
+template <class type> void Deque<type>::pop_back() {
   if (tail) {
     denode<type> *tmp = tail;
     tail = tail->prev;
@@ -129,8 +121,7 @@ void Deque<type>::pop_back() {
   }
 }
 
-template <class type>
-void Deque<type>::makeNull() {
+template <class type> void Deque<type>::makeNull() {
   while (head) {
     denode<type> *tmp = head;
     head = head->next;
@@ -140,8 +131,7 @@ void Deque<type>::makeNull() {
   Size = 0;
 }
 
-template <class type>
-void Deque<type>::print() const {
+template <class type> void Deque<type>::print() const {
   if (head) {
     for (denode<type> *cur = head; cur; cur = cur->next)
       std::cout << cur->data << " ";
@@ -149,18 +139,11 @@ void Deque<type>::print() const {
   }
 }
 
-template <class type> 
-denode<type> *Deque<type>::front() const {
-  return head;
-}
+template <class type> denode<type> *Deque<type>::front() const { return head; }
 
-template <class type>
-denode<type> *Deque<type>::rear() const {
-  return tail;
-}
+template <class type> denode<type> *Deque<type>::rear() const { return tail; }
 
-template <class type>
-int Deque<type>::size() const { return Size; }
+template <class type> int Deque<type>::size() const { return Size; }
 
 template <class type>
 std::ostream &operator<<(std::ostream &stream, const Deque<type> &obj) {
@@ -169,9 +152,8 @@ std::ostream &operator<<(std::ostream &stream, const Deque<type> &obj) {
       stream << cur->data << " ";
     }
   }
-  return stream; 
+  return stream;
 }
-
 
 template Deque<int>::Deque();
 template Deque<std::string>::Deque();
@@ -205,8 +187,7 @@ template Deque<char> &Deque<char>::operator=(Deque &&obj);
 
 template denode<int> *Deque<int>::operator[](int index) const;
 template denode<double> *Deque<double>::operator[](int index) const;
-template denode<std::string> *
-Deque<std::string>::operator[](int index) const;
+template denode<std::string> *Deque<std::string>::operator[](int index) const;
 template denode<char> *Deque<char>::operator[](int index) const;
 
 template void Deque<int>::push_back(int n);

@@ -6,23 +6,22 @@ SortedList<type>::SortedList()
     : head(nullptr), tail(nullptr), sorted_head(nullptr), Size(0) {}
 
 // deconstructor
-template <class type>
-SortedList<type>::~SortedList() { makeNull(); }
+template <class type> SortedList<type>::~SortedList() { makeNull(); }
 
 // copy constructor
 template <class type>
 SortedList<type>::SortedList(const SortedList &obj)
-    : head(nullptr), sorted_head(nullptr), tail(nullptr) { // copy constructor
+    : head(nullptr), tail(nullptr), sorted_head(nullptr),
+      Size(obj.Size) { 
   snode<type> *cur = obj.head;
   for (; cur; cur = cur->next)
     push(cur->data);
-  Size = obj.Size;
 }
 
 // move constructor
 template <class type>
 SortedList<type>::SortedList(SortedList &&obj)
-    : head(obj.head), sorted_head(obj.sorted_head), tail(obj.tail),
+    : head(obj.head), tail(obj.tail), sorted_head(obj.sorted_head),
       Size(obj.Size) {
   obj.head = obj.sorted_head = obj.tail = nullptr;
   obj.Size = 0;
@@ -58,8 +57,7 @@ SortedList<type> &SortedList<type>::operator=(SortedList &&obj) {
   return *this;
 }
 
-template <class type>
-void SortedList<type>::push(type n) {
+template <class type> void SortedList<type>::push(type n) {
   snode<type> *tmp;
   tmp = new snode<type>(n);
 
@@ -86,8 +84,7 @@ void SortedList<type>::push(type n) {
   Size++;
 }
 
-template <class type>
-void SortedList<type>::erase(type n) {
+template <class type> void SortedList<type>::erase(type n) {
   if (!head)
     return;
   snode<type> *item;
@@ -116,24 +113,21 @@ void SortedList<type>::erase(type n) {
   Size--;
 }
 
-template <class type>
-snode<type> *SortedList<type>::front() const {
+template <class type> snode<type> *SortedList<type>::front() const {
   if (!empty())
     return head;
   else
     return nullptr;
 }
 
-template <class type>
-snode<type> *SortedList<type>::sorted_front() const {
+template <class type> snode<type> *SortedList<type>::sorted_front() const {
   if (!empty())
     return sorted_head;
   else
     return nullptr;
 }
 
-template <class type>
-void SortedList<type>::makeNull() {
+template <class type> void SortedList<type>::makeNull() {
   while (head) {
     snode<type> *tmp = head;
     head = head->next;
@@ -162,14 +156,11 @@ void SortedList<type>::printSorted(std::ofstream &stream) const {
   stream << "\n";
 }
 
-template <class type>
-bool SortedList<type>::empty() const {
+template <class type> bool SortedList<type>::empty() const {
   return head == tail && !head;
 }
 
-template <class type>
-int SortedList<type>::size() const { return Size; }
-
+template <class type> int SortedList<type>::size() const { return Size; }
 
 template SortedList<int>::SortedList();
 template SortedList<double>::SortedList();
@@ -188,7 +179,8 @@ template SortedList<double>::SortedList(SortedList &&obj);
 template SortedList<char>::SortedList(SortedList &&obj);
 
 template SortedList<int> &SortedList<int>::operator=(const SortedList &obj);
-template SortedList<double> &SortedList<double>::operator=(const SortedList &obj);
+template SortedList<double> &
+SortedList<double>::operator=(const SortedList &obj);
 template SortedList<char> &SortedList<char>::operator=(const SortedList &obj);
 
 template SortedList<int> &SortedList<int>::operator=(SortedList &&obj);
